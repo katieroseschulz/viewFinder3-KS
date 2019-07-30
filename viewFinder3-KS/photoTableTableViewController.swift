@@ -14,12 +14,28 @@ class photoTableTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        }
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "moveToDetail", sender: photos[indexPath.row])
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "moveToDetail" {
+            if let photoDetailView = segue.destination as? PhotoViewController3ViewController {
+                if let photoToSend = sender as? Photos {
+                    photoDetailView.photo = photoToSend
+                }
+            }
+        }
     }
     
     func getPhotos() {
@@ -56,6 +72,8 @@ class photoTableTableViewController: UITableViewController {
 
         return cell
     }
+
+
 
     /*
     // Override to support conditional editing of the table view.
