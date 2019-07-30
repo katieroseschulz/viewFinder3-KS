@@ -45,4 +45,19 @@ class AddPhotoViewController: UIViewController, UIImagePickerControllerDelegate,
             imagePicker.dismiss(animated: true, completion: nil)
         }
     }
+    
+    @IBAction func save(_ sender: UIButton) {
+        if let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext {
+            let photosToSave = Photos(entity: Photos.entity(), insertInto: context)
+            photosToSave.caption = userInput.text
+            if let userImage = newImageView.image {
+                if let userImageData = userImage.pngData() {
+                    photosToSave.imageData = userImageData
+                }
+            }
+            (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+            navigationController?.popViewController(animated: true)
+        }
+    }
+    
 }
